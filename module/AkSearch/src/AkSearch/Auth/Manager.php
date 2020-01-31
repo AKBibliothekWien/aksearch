@@ -136,12 +136,12 @@ class Manager extends DefaultAuthManager {
     }
     
     
-    public function requestSetPassword($username, $request) {
+    public function requestSetPassword($request) {
         // 0. Click button in requestsetpassword.phtml
         // 1. AkSitesController.php->requestSetPasswordAction()
         // 2. Auth\Manager.php->requestSetPassword()
         // 3. Auth\Database.php->requestSetPassword()
-        $result = $this->getAuth()->requestSetPassword($username, $request);
+        $result = $this->getAuth()->requestSetPassword($request);
         return $result;
     }
     
