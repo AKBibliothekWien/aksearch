@@ -191,11 +191,6 @@ if ($offlineMode != "ils-offline") {
 			echo '</tr>';
 			
 			foreach ($holdingsOfLocation['items'] as $holdingOfLocation) {
-				/*
-				echo '<pre>';
-				print_r($holdingOfLocation);
-				echo '</pre>';
-				*/
 				$check = (isset($holdingOfLocation['check']) && $holdingOfLocation['check']);
 				
 				// Call Numbers (first and second)
@@ -268,7 +263,6 @@ if ($offlineMode != "ils-offline") {
 								} else {
 									// Link for placing a hold
 									if (isset($holdingOfLocation['link']) && $holdingOfLocation['link']) {
-										
 										// Use this if we check if the request is valid in checkRequestIsValidAjax (PHP class AkSearch\Controller\AkAjaxController and JS checkRequestIsValid in record.aksearch.js) 
 										//$checkClass = $check ? ' checkRequest' : '';
 										//$checkText = $check ? 'Check Hold' : 'Place a Hold';
@@ -279,14 +273,16 @@ if ($offlineMode != "ils-offline") {
 											$holdButtonText = $this->transEsc('Recall This');
 										}
 										echo '<a class="btn btn-default clear-btn holdPlace" href="' . $this->recordLink()->getHoldUrl($holdingOfLocation['link']) . '"><span>' . $this->transEsc($holdButtonText) . '</span></a>';
-											
 									} else {
 										if (isset($holdingOfLocation['get_from_readingroom']) && $holdingOfLocation['get_from_readingroom'] == true) {
 											echo $this->transEsc('GetFromReadingRoom');
 										} else {
-											echo $this->transEsc('AskLibraryStaff');
+											if ($holdingOfLocation['requested'] == true && empty($holdingOfLocation['process_type'])) {
+												echo $this->transEsc('RetrieveReshelf');
+											} else {
+												echo $this->transEsc('AskLibraryStaff');
+											}
 										}
-										
 									}
 								}
 							} else {
