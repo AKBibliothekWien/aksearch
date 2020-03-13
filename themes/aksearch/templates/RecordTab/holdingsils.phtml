@@ -38,6 +38,8 @@ $this->driver->getItmLinkItems();
 */
 ?>
 
+<div class="alert alert-danger"><i class="fa fa-exclamation-triangle"></i>&nbsp;<?=$this->transEsc('coronaWarningLong')?></div>
+
 <? if (!empty($urls)): ?>
   <h3><?=$this->transEsc("Internet")?></h3>
   <? if (!empty($urls)): ?>
@@ -252,7 +254,8 @@ if ($offlineMode != "ils-offline") {
 						}
 						echo '</td>';
 						echo '<td>';
-	
+						echo '<span class="text-danger">'.$this->transEsc('coronaWarningShort').'</span>';
+						/*
 						if (($this->ils()->getHoldsMode() == 'driver' || $this->ils()->getTitleHoldsMode() == 'driver')) {
 							if ($account->loginEnabled() && $offlineMode != 'ils-offline') {
 								if (!$user) {
@@ -289,6 +292,7 @@ if ($offlineMode != "ils-offline") {
 								echo $this->transEsc('login_disabled');
 							}
 						}
+						*/
 	
 						echo '</td>';
 						echo '</tr>';
