@@ -2597,7 +2597,7 @@ class SolrMab extends SolrDefault  {
 						} else if ($permanentLocationStr == null && $locationZslStr != null) {
 							$location = $locationZslStr;
 						}
-						
+					
 						$holSpecialLocationArr = (isset($this->fields['hol852cSonderstandort_txt_mv']) && !empty($this->fields['hol852cSonderstandort_txt_mv'])) ? $this->fields['hol852cSonderstandort_txt_mv'] : null;
 						$holSpecialLocationArrDiff = ($permanentLocationArr != null && $holSpecialLocationArr != null) ? array_diff($holSpecialLocationArr, $permanentLocationArr) : null;
 						$holSpecialLocationTranslated = [];
@@ -2616,24 +2616,29 @@ class SolrMab extends SolrDefault  {
 						$holCommentArr = (isset($this->fields['hol866zKommentar_txt_mv']) && !empty($this->fields['hol866zKommentar_txt_mv'])) ? $this->fields['hol866zKommentar_txt_mv'] : null;
 						$holCommentStr = ($holCommentArr != null) ? implode(', ', $holCommentArr) : null;
 
-						$moduloCounter = 0;
 						$counter = 0;
+						$moduloCounter = 0;
+						$years = null;
+						$gaps = null;
 						foreach ($hol866azArr as $hol866az) {
 							if ($moduloCounter == 0 || ($moduloCounter % 2) == 0) {
-								$returnValue[$counter]['holding'] = ($hol866az != null && !empty($hol866az)) ? $hol866az : null;
+								//$returnValue[$counter]['holding'] = ($hol866az != null && !empty($hol866az)) ? $hol866az : null;
+								$years[] = ($hol866az != null && !empty($hol866az)) ? $hol866az : null;
 							}
 							if ($moduloCounter == 1 || ($moduloCounter % 2) == 1) {
-								$returnValue[$counter]['gaps'] = ($hol866az != null && !empty($hol866az) && $hol866az != 'NoGaps') ? $hol866az : null;
+								//$returnValue[$counter]['gaps'] = ($hol866az != null && !empty($hol866az) && $hol866az != 'NoGaps') ? $hol866az : null;
+								$gaps[] = ($hol866az != null && !empty($hol866az) && $hol866az != 'NoGaps') ? $hol866az : null;
 							}
-							
-							$returnValue[$counter]['sublib'] = $holOwnStr;
-							$returnValue[$counter]['shelfmark'] = $this->getMaskedValue($holCallNoStr);
-							$returnValue[$counter]['location'] = $this->getMaskedValue($location);
-							$returnValue[$counter]['locationshelfmark'] = $this->getMaskedValue($holSpecialCallNoStr);
-							$returnValue[$counter]['comment'] = $holCommentStr;
-							
 							$moduloCounter = $moduloCounter + 1;
 						}
+
+						$returnValue[$counter]['holding'] = implode(', ', array_filter($years));
+						$returnValue[$counter]['gaps'] = implode(', ', array_filter($gaps));
+						$returnValue[$counter]['sublib'] = $holOwnStr;
+						$returnValue[$counter]['shelfmark'] = $this->getMaskedValue($holCallNoStr);
+						$returnValue[$counter]['location'] = $this->getMaskedValue($location);
+						$returnValue[$counter]['locationshelfmark'] = $this->getMaskedValue($holSpecialCallNoStr);
+						$returnValue[$counter]['comment'] = $holCommentStr;
 					}
 				}
 			} catch (ILSException $e) {
