@@ -36,9 +36,17 @@ $this->driver->getItmLinkItems();
     <a class="holdPlace" href="<?=$this->recordLink()->getHoldUrl($holdingTitleHold)?>"><?=$this->transEsc('title_hold_place')?></a>
 <? endif; ?>
 */
-?>
 
-<div class="alert alert-danger"><i class="fa fa-exclamation-triangle"></i>&nbsp;<?=$this->transEsc('coronaWarningLong')?></div>
+// TODO: Remove "getRealTimeHoldings" after corona! Also remove the corona-warning-messages below
+$holdings = $this->driver->getRealTimeHoldings();
+?>
+<?php if (!empty($holdings)): ?>
+	<div class="alert alert-danger"><i class="fa fa-exclamation-triangle"></i>&nbsp;<?=$this->transEsc('coronaWarningLong')?></div>
+<?php elseif(empty($holdings) && !in_array('Volltext', array_column($urls,'desc'))): ?>
+	<div class="alert alert-danger"><i class="fa fa-exclamation-triangle"></i>&nbsp;<?=$this->transEsc('coronaWarningLong')?></div>
+<?php endif; ?>
+
+
 
 <? if (!empty($urls)): ?>
   <h3><?=$this->transEsc("Internet")?></h3>
@@ -124,7 +132,8 @@ if ($offlineMode != "ils-offline") {
 	
 	/*########################### ITEM HOLDINGS ###########################*/
 	// Get item holdings from API
-	$holdings = $this->driver->getRealTimeHoldings();
+	// TODO: After corona move "getRealTimeHoldings" back here!
+	//$holdings = $this->driver->getRealTimeHoldings();
 	
 	if (! empty($holdings)) {
 		
@@ -254,6 +263,7 @@ if ($offlineMode != "ils-offline") {
 						}
 						echo '</td>';
 						echo '<td>';
+						// TODO: Remove the corona-warning-messages below
 						echo '<span class="text-danger">'.$this->transEsc('coronaWarningShort').'</span>';
 						/*
 						if (($this->ils()->getHoldsMode() == 'driver' || $this->ils()->getTitleHoldsMode() == 'driver')) {
