@@ -368,8 +368,27 @@ function updatePageForLogin() {
 	  // Refresh tag list
 	  if(typeof refreshTagList === "function") {
 	    refreshTagList(true);
-	  }
-	}
+    }
+
+    // After login, check if the user account is (nearly) expired. If yes, show a warning in a lightbox.
+    $.getJSON(
+      // Query the expiry date from the profile data. This executes the "method" of the GET parameters below.
+      VuFind.path + '/AJAX/JSON',
+      // GET parameter for ajax call
+      {
+          method: 'checkAccountExpired'
+      },
+      // Success callback function
+      function success(response) {          
+        if (response.data.msg != false) {
+          // Show the lightbox with an appropriate message
+          Lightbox.displayError(VuFind.translate(response.data.msg), response.data.type);
+        }
+      }
+    );
+    
+  }
+  
 	function newAccountHandler(html) {
 	  updatePageForLogin();
 	  var params = deparam(Lightbox.openingURL);
@@ -380,6 +399,7 @@ function updatePageForLogin() {
 	    Lightbox.close();
 	  }
 	}
+
 
 //This is a full handler for the login form
 function ajaxLogin(form) {

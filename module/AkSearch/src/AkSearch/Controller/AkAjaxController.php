@@ -179,4 +179,38 @@ class AkAjaxController extends \VuFind\Controller\AjaxController implements \VuF
 		
 		return $this->output($this->translate('An error has occurred'), self::STATUS_ERROR);
 	}
+
+	/**
+	 * Check if the user account is (nearly) expired
+	 *
+	 * @return array Array with information about a (nearly) expired account
+	 */
+	public function checkAccountExpiredAjax() {
+		$response = [];
+
+		// Defaults
+		$response['msg'] = false;
+		$status = self::STATUS_ERROR;
+		
+		if ($patron = $this->getILSAuthenticator()->storedCatalogLogin()) {
+			$profile = $this->getILS()->getMyProfile($patron);
+			if (isset($profile['expire'])) {
+				$expiryDateObj = \DateTime::createFromFormat('d.m.Y H:i:s', $profile['expire'].' 23:59:59');
+				$expireDateTS = $expiryDateObj->getTimestamp();
+				$expiryDateFormatted = date('d.m.Y', $expireDateTS);
+				$nowTs = time();
+				if ($expireDateTS < $nowTs) {
+					// Account is expired
+					$response['msg'] = $this->translate('accountExpiredMsg');
+					$response['type'] = 'danger';
+				} else if (($expireDateTS - $nowTs) < 604800) {
+					// Account is nearly expired (one week or less from now)
+					$response['msg'] = $this->translate('accountNearlyExpiredMsg', ['__expiryDate__' => $expiryDateFormatted]);
+					$response['type'] = 'warning';
+				}
+				$status = self::STATUS_OK;
+			}
+		}
+		return $this->output($response, $status);
+	}
 }
