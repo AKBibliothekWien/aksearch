@@ -192,10 +192,10 @@ class ApiController extends AbstractBase implements AuthorizationServiceAwareInt
 			}
 			
 			// Get first name
-			$firstName = (isset($requestBodyJson->webhook_user->user->first_name)) ? $requestBodyJson->webhook_user->user->first_name : null;
+			$firstName = (isset($requestBodyJson->webhook_user->user->first_name)) ? $requestBodyJson->webhook_user->user->first_name : '';
 			
 			// Get last name
-			$lastName = (isset($requestBodyJson->webhook_user->user->last_name)) ? $requestBodyJson->webhook_user->user->last_name : null;
+			$lastName = (isset($requestBodyJson->webhook_user->user->last_name)) ? $requestBodyJson->webhook_user->user->last_name : '';
 			
 			// Get preferred eMail
 			$eMail = null;

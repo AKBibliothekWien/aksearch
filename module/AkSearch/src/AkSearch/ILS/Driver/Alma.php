@@ -591,6 +591,7 @@ class Alma extends AbstractBase implements \Zend\Log\LoggerAwareInterface, \VuFi
 		$address2 = null;
 		$address3 = null;
 		$address4 = null;
+		$address5 = null;
 		$city = null;
 		$zip = null;
 		foreach($details->contact_info->addresses->address as $address) {
