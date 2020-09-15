@@ -948,7 +948,7 @@ class ApiController extends AbstractBase implements AuthorizationServiceAwareInt
 	
 	
 	private function generatePassword() {
-		$chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ23456789$&#*+!%+-_@?';
+		$chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ23456789#+-_';
 		$shuffledChars = str_shuffle($chars);
 		
 		$length = strlen($chars) - 1;
