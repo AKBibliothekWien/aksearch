@@ -435,6 +435,8 @@ class SolrMab extends SolrDefault  {
 					$format = 'ebook';
 				} else if (in_array('eaudiobook', $formats)) {
 					$format = 'eaudiobook';
+				} else if (in_array('ejournal', $formats)) {
+					$format = 'electronic';
 				} else {
 					$format = 'unknown';
 				}
