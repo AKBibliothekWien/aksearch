@@ -24,6 +24,7 @@ $salutation = ($this->request->get('salutation')) ? $this->escapeHtmlAttr($this-
 $salutationSelectedNone = ($salutation == null || $salutation == '') ? 'selected="selected"' : '';
 $salutationSelectedMs = ($salutation != null && $salutation == $this->escapeHtmlAttr($this->transEsc('salutationMs'))) ? 'selected="selected"' : '';
 $salutationSelectedMr = ($salutation != null && $salutation == $this->escapeHtmlAttr($this->transEsc('salutationMr'))) ? 'selected="selected"' : '';
+$salutationSelectedIn = ($salutation != null && $salutation == $this->escapeHtmlAttr($this->transEsc('salutationIn'))) ? 'selected="selected"' : '';
 
 $jobs = $this->jobs;
 $jobFromRequest = $this->escapeHtmlAttr($this->request->get('job'));
@@ -49,6 +50,7 @@ $captchaPath = (strtolower($splittedUri[0]) == 'aksearch') ? '/aksearch' : '';
 				<option value="" <?=$salutationSelectedNone?>><?=$this->escapeHtmlAttr($this->transEsc('pleaseChoose'))?></option>
 				<option value="<?=$this->escapeHtmlAttr($this->transEsc('salutationMs'))?>" <?=$salutationSelectedMs?>><?=$this->escapeHtmlAttr($this->transEsc('salutationMs'))?></option>
 				<option value="<?=$this->escapeHtmlAttr($this->transEsc('salutationMr'))?>" <?=$salutationSelectedMr?>><?=$this->escapeHtmlAttr($this->transEsc('salutationMr'))?></option>
+				<option value="<?=$this->escapeHtmlAttr($this->transEsc('salutationIn'))?>" <?=$salutationSelectedIn?>><?=$this->escapeHtmlAttr($this->transEsc('salutationIn'))?></option>
 			</select>
 			<div class="help-block with-errors"></div>
 		</td>

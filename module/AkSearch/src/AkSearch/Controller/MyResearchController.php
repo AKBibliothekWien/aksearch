@@ -334,7 +334,9 @@ class MyResearchController extends DefaultMyResearchController implements Transl
     				$gender = 'MALE';
     			} else if ($salutation == $this->translate('salutationMs')) {
     				$gender = 'FEMALE';
-    			}
+				} else if ($salutation == $this->translate('salutationIn')) {
+					$gender = 'OTHER';
+				}
     		}
     		$job = $this->params()->fromPost('job');
     		$password = $this->params()->fromPost('password');
@@ -600,7 +602,8 @@ class MyResearchController extends DefaultMyResearchController implements Transl
     private function sendEmailToNewPatron($gender, $job, $jobsSpecialEmailText, $firstName, $lastName, $barcode, $dateExpiryTS, $displayDateFormat, $to, $from, $replyTo, $bcc) {
     	$success = false;
     	$subject= $this->translate('eMailToUserSubject');
-    	$salutation = ($gender == 'FEMALE') ? $this->translate('eMailToUserSalutationMs') : $this->translate('eMailToUserSalutationMr');
+		//$salutation = ($gender == 'FEMALE') ? $this->translate('eMailToUserSalutationMs') : $this->translate('eMailToUserSalutationMr');
+		$salutation = $this->translate('eMailToUserSalutationGeneric');
     	$specialText = '';
     	if (in_array($job, $jobsSpecialEmailText)) {
     		$specialText= $this->translate('eMailToUserSpecialText');
@@ -672,7 +675,15 @@ class MyResearchController extends DefaultMyResearchController implements Transl
     private function sendEmailToLibrary($firstName, $lastName, $street, $zip, $city, $phone, $job, $birthday, $gender, $barcode, $dateExpiryTS, $displayDateFormat, $email, $dataProcessing, $loanHistory, $houseAndUsageRules, $residenceRegistrationCard, $from, $replyTo, $toLibrary) {
     	        
         $success = false;
-        $dateExpiryString = date($displayDateFormat, $dateExpiryTS);
+		$dateExpiryString = date($displayDateFormat, $dateExpiryTS);
+		
+		$g = 'Inter/Divers';
+		if ($gender == 'FEMALE') {
+			$g = $this->translate('female');
+		} else if ($gender == 'MALE') {
+			$g = $this->translate('male');
+		}
+
         $tokens = [
             '_firstName_' => $firstName,
             '_lastName_' => $lastName,
@@ -681,7 +692,7 @@ class MyResearchController extends DefaultMyResearchController implements Transl
             '_phone_' => $phone,
             '_job_' => $job,
             '_birthday_' => $birthday,
-            '_gender_' => (($gender == 'FEMALE') ? $this->translate('female') : $this->translate('male')),
+            '_gender_' => $g,
             '_barcode_' => $barcode,
             '_dateExpiry_' => $dateExpiryString,
             '_acceptedDataProcessing_' => (($dataProcessing == true) ? $this->translate('yes') : $this->translate('no')),
