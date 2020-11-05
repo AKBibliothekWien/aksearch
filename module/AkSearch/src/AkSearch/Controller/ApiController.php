@@ -1021,6 +1021,7 @@ class ApiController extends AbstractBase implements AuthorizationServiceAwareInt
 			$mail = new Mail\Message();
 			$mail->setBody($email_message);
 			$mail->setFrom($from);
+			$mail->setSender($from);
 			$mail->addTo($to);
 			$mail->setSubject($email_subject);
 			$mail->addBcc($bcc);

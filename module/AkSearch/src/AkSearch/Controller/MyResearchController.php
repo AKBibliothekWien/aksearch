@@ -625,6 +625,7 @@ class MyResearchController extends DefaultMyResearchController implements Transl
     	$headers->addHeaderLine('Content-Type', 'text/html;charset=UTF-8');
     	$mail->addTo($to);
     	$mail->setFrom($from);
+    	$mail->setSender($from);
     	$mail->setReplyTo($replyTo);
     	$mail->setBcc($bcc);
     	$mail->setSubject($subject);
@@ -736,6 +737,7 @@ class MyResearchController extends DefaultMyResearchController implements Transl
         $headers->addHeaderLine('Content-Type', 'text/html;charset=UTF-8');
         $mail->addTo($toLibrary);
         $mail->setFrom($from);
+        $mail->setSender($from);
         $mail->setReplyTo($replyTo);
         $mail->setSubject($subject);
         $mail->setBody($mimeMessage);
@@ -802,6 +804,7 @@ class MyResearchController extends DefaultMyResearchController implements Transl
     				$headers->addHeaderLine('Content-Type', 'text/html;charset=UTF-8');
     				$mail->addTo($user->email);
     				$mail->setFrom($configAlma->Users->emailFrom);
+    				$mail->setSender($configAlma->Users->emailFrom);
     				$mail->setReplyTo($configAlma->Users->emailReplyTo);
     				$mail->setSubject($this->translate('recovery_email_subject'));
     				$mail->setBody($message);

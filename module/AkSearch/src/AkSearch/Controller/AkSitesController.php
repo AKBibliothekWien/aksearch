@@ -451,6 +451,7 @@ class AkSitesController extends AbstractBase implements \VuFind\I18n\Translator\
 		    	$headers->addHeaderLine('Content-Type', 'text/html;charset=UTF-8');
 		    	$mail->addTo($toEmail);
 		    	$mail->setFrom($fromEmail);
+		    	$mail->setSender($fromEmail);
 		    	$mail->setReplyTo($replyToEmail);
 		    	$mail->setBcc($bccEmail);
 		    	$mail->setSubject($subject);
