@@ -264,9 +264,10 @@ if ($offlineMode != "ils-offline") {
 						echo '</td>';
 						echo '<td>';
 						// TODO: Remove the corona-warning-messages below - this is the "Orders not possible" text
-						// echo '<span class="text-danger">'.$this->transEsc('coronaWarningShort').'</span>';
+						echo '<span class="text-danger">'.$this->transEsc('coronaWarningShort').'</span>';
 						
 						// TODO: For deactivating orders, comment out this code block
+						/*
 						if (($this->ils()->getHoldsMode() == 'driver' || $this->ils()->getTitleHoldsMode() == 'driver')) {
 							if ($account->loginEnabled() && $offlineMode != 'ils-offline') {
 								if (!$user) {
@@ -303,6 +304,7 @@ if ($offlineMode != "ils-offline") {
 								echo $this->transEsc('login_disabled');
 							}
 						}
+						*/
 						
 						
 						echo '</td>';
