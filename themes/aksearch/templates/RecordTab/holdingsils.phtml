@@ -263,8 +263,12 @@ if ($offlineMode != "ils-offline") {
 						}
 						echo '</td>';
 						echo '<td>';
-						// TODO: Remove the corona-warning-messages below - this is the "Orders not possible" text
-						echo '<span class="text-danger">'.$this->transEsc('coronaWarningShort').'</span>';
+						// TODO: Remove the corona-warning-messages below - this is the "Orders not possible" (except for location "AKW9") text
+						if ($location == 'AKW9') {
+							echo 'Direkt aus der BR-Bücherei (6. Stock) holen';
+						} else {
+							echo '<span class="text-danger">'.$this->transEsc('coronaWarningShort').'</span>';
+						}
 						
 						// TODO: For deactivating orders, comment out this code block
 						/*
