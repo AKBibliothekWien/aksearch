@@ -264,14 +264,15 @@ if ($offlineMode != "ils-offline") {
 						echo '</td>';
 						echo '<td>';
 						// TODO: Remove the corona-warning-messages below - this is the "Orders not possible" (except for location "AKW9") text
+						/*
 						if ($location == 'AKW9') {
-							echo 'Direkt aus der BR-Bücherei (6. Stock) holen';
+							echo $this->transEsc('GetFromBrLibrary');
 						} else {
 							echo '<span class="text-danger">'.$this->transEsc('coronaWarningShort').'</span>';
 						}
+						*/
 						
-						// TODO: For deactivating orders, comment out this code block
-						/*
+						// TODO: For deactivating orders, comment out this code block - BEGIN
 						if (($this->ils()->getHoldsMode() == 'driver' || $this->ils()->getTitleHoldsMode() == 'driver')) {
 							if ($account->loginEnabled() && $offlineMode != 'ils-offline') {
 								if (!$user) {
@@ -298,6 +299,8 @@ if ($offlineMode != "ils-offline") {
 										} else {
 											if ($holdingOfLocation['requested'] == true && empty($holdingOfLocation['process_type'])) {
 												echo $this->transEsc('RetrieveReshelf');
+											} else if ($location == 'AKW9') {
+												echo $this->transEsc('GetFromBrLibrary');
 											} else {
 												echo $this->transEsc('AskLibraryStaff');
 											}
@@ -308,8 +311,7 @@ if ($offlineMode != "ils-offline") {
 								echo $this->transEsc('login_disabled');
 							}
 						}
-						*/
-						
+						// For deactivating orders, comment out this code block - END
 						
 						echo '</td>';
 						echo '</tr>';
