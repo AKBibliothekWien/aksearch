@@ -9,7 +9,7 @@
 ?>
 <h2><?=$this->transEsc('request_place_text')?></h2>
 <? if ($this->helpText): ?>
-<p class="helptext"><?=$this->translate($this->helpText)?></p>
+<p class="helptext alert alert-warning"><?=$this->translate($this->helpText)?></p>
 <? endif; ?>
 
 <?=$this->flashmessages()?>
